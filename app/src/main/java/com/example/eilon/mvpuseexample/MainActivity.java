@@ -21,6 +21,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         showInfo = (TextView)findViewById(R.id.infoToPresent);
         button = (Button)findViewById(R.id.button);
-        presenter = new Presenter(button, showInfo);
+        presenter = new Presenter(this, button, showInfo);
     }
 }

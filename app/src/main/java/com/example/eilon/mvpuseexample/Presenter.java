@@ -12,12 +12,14 @@ public class Presenter {
 
     private Button buttonToListen;
     private TextView placeData;
+    private MainActivity modelActivity;
 
     public Presenter() {}
 
-    public Presenter(Button buttonToListen, TextView placeDate) {
+    public Presenter(MainActivity modelActivity, Button buttonToListen, TextView placeDate) {
         this.buttonToListen = buttonToListen;
         this.placeData = placeDate;
+        this.modelActivity = modelActivity;
         buttonToListen.setBackgroundResource(R.mipmap.pokeball);
         buttonToListen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -28,6 +30,8 @@ public class Presenter {
         });
     }
 
+    // This method is calling the model part of the MVP (PokemonRetriever)
+    // to retrieve data
     private void handleClick() {
         buttonToListen.setBackgroundResource(R.mipmap.pokeball_open);
         placeData.setText("Retrieving pokemon list ...");
@@ -38,7 +42,13 @@ public class Presenter {
 
     // This method is invoked in order to notify the presenter
     // that data is emitted from the PokemonRetriever
+    // and places the fetched data in the view
     public void finishedRetrievingData(String text) {
         placeData.setText(text);
+    }
+
+    // This method returns the model activity
+    public MainActivity retrieveModelActivity() {
+        return modelActivity;
     }
 }

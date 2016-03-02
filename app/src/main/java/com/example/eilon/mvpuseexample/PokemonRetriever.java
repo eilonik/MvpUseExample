@@ -1,5 +1,9 @@
 package com.example.eilon.mvpuseexample;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -11,13 +15,17 @@ import rx.schedulers.Schedulers;
  */
 public class PokemonRetriever {
 
+    private Presenter presenter;
+
     public PokemonRetriever(final Presenter presenter) {
+
+        this.presenter = presenter;
 
         final Observable operationObservable = Observable.create(new Observable.OnSubscribe() {
             @Override
             public void call(Object o) {
                 Subscriber subscriber = (Subscriber)o;
-                subscriber.onNext(getPokemons());
+                subscriber.onNext(getPokemons()); // The long task to be performed
                 subscriber.onCompleted();
             }
         })
@@ -52,8 +60,41 @@ public class PokemonRetriever {
 
     }
 
-    public String getPokemons() {
-        String pokemonsList = "GOOD TEXT\nGOOD TEXT";
+
+    // This method simulates reading from a database(in this case plane text file)
+    public String getPokemons()  {
+
+        String pokemonsList = "";
+
+        // Reading the database file into pokemonsList
+        InputStream inputStream = presenter.retrieveModelActivity().getApplicationContext()
+                .getResources().openRawResource(R.raw.pokemons);
+        InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+        BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+        String temp = "";
+        while (temp != null) {
+            try {
+                temp = bufferedReader.readLine();
+                if(temp != null){
+                    pokemonsList += temp + "\n";
+                }
+            } catch (Exception e){}
+        }
+
+        // Closing all open streams
+        try{
+            bufferedReader.close();
+        } catch (Exception e){}
+
+        try{
+
+            inputStreamReader.close();
+        } catch (Exception e){}
+
+        try {
+
+            inputStream.close();
+        } catch (Exception e){}
 
         return pokemonsList;
     }
