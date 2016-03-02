@@ -12,14 +12,14 @@ public class Presenter {
 
     private Button buttonToListen;
     private TextView placeData;
-    private MainActivity modelActivity;
+    private MainActivity viewActivity;
 
     public Presenter() {}
 
-    public Presenter(MainActivity modelActivity, Button buttonToListen, TextView placeDate) {
+    public Presenter(MainActivity viewActivity, Button buttonToListen, TextView placeDate) {
         this.buttonToListen = buttonToListen;
         this.placeData = placeDate;
-        this.modelActivity = modelActivity;
+        this.viewActivity = viewActivity;
         buttonToListen.setBackgroundResource(R.mipmap.pokeball);
         buttonToListen.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,7 +48,7 @@ public class Presenter {
     }
 
     // This method returns the model activity
-    public MainActivity retrieveModelActivity() {
-        return modelActivity;
+    public MainActivity retrieveViewActivity() {
+        return viewActivity;
     }
 }

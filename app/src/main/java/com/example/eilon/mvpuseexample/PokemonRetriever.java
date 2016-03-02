@@ -67,7 +67,7 @@ public class PokemonRetriever {
         String pokemonsList = "";
 
         // Reading the database file into pokemonsList
-        InputStream inputStream = presenter.retrieveModelActivity().getApplicationContext()
+        InputStream inputStream = presenter.retrieveViewActivity().getApplicationContext()
                 .getResources().openRawResource(R.raw.pokemons);
         InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
         BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
