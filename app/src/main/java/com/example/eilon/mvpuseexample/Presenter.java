@@ -4,13 +4,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import rx.Observable;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-
 /**
  * Created by eilon on 01/03/16.
+ * This class is the presenter in the MVP
  */
 public class Presenter {
 
@@ -35,34 +31,14 @@ public class Presenter {
     private void handleClick() {
         buttonToListen.setBackgroundResource(R.mipmap.pokeball_open);
         placeData.setText("Retrieving pokemon list ...");
-        final PokemonRetriever pokemonRetriever = new PokemonRetriever();
-        final Observable operationObservable = Observable.create(new Observable.OnSubscribe() {
-            @Override
-            public void call(Object o) {
-                Subscriber subscriber = (Subscriber)o;
-                subscriber.onNext(pokemonRetriever.getPokemons());
-                subscriber.onCompleted();
-            }
-        })
-                // registering subscriber on threads
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread());
+        final PokemonRetriever pokemonRetriever = new PokemonRetriever(this);
 
-        operationObservable.subscribe(new Subscriber() {
-            @Override
-            public void onCompleted() {
+    }
 
-            }
 
-            @Override
-            public void onError(Throwable e) {
-                placeData.setText("Error retrieving pokemons :/ , " + e.getMessage());
-            }
-
-            @Override
-            public void onNext(Object o) {
-                placeData.setText((String)o);
-            }
-        });
+    // This method is invoked in order to notify the presenter
+    // that data is emitted from the PokemonRetriever
+    public void finishedRetrievingData(String text) {
+        placeData.setText(text);
     }
 }

@@ -1,3 +1,7 @@
+/**
+ * This class is the view in the MVP
+ */
+
 package com.example.eilon.mvpuseexample;
 
 import android.os.Bundle;
