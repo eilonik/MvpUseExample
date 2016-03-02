@@ -10,7 +10,8 @@ public class PokemonRetriever {
     }
 
     public String getPokemons() {
-        String pokemonsList = "ABBABBA\nAMMM\nAAAA";
+        String pokemonsList = "GOOD TEXT\nGOOD TEXT";
+
         return pokemonsList;
     }
 }
